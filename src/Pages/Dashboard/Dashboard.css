@@ -1,0 +1,70 @@
+.pipe {
+  font-size: 1rem;
+
+  padding: 0;
+  margin: 0;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.filter-icon > svg {
+  font-size: 1.1rem;
+}
+
+
+.down-icon > svg {
+  font-size: 0.9rem;
+}
+
+.calender-icon {
+  padding-right: 0.5rem;
+}
+
+.act-icons-pd-r {
+  padding-right: 0.5rem;
+}
+
+.filter-btns-pad {
+  padding: 0.5rem;
+}
+
+.action-btns-pad {
+  padding: 0.5rem 1.75rem;
+}
+
+.btn-stlyes {
+  width: max-content;
+  height: max-content;
+
+  background-color: white;
+
+  color: black;
+  font-size: 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.center-element {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.margin-top {
+  margin-top: 2rem;
+}
+
+.pipe {
+  padding-left: 0.25rem;
+}

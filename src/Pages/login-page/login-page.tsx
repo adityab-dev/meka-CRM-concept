@@ -1,10 +1,10 @@
 import ellipse from "../../assets/Ellipse.png";
 import logo from "../../assets/logo.png";
-import google from "../../assets/google.png";
 
 import "./login-page.css";
 
 import { DotMatrix } from "../../Components/dot-matrix/dot-matrix";
+import { LoginButton } from "../../Components/buttons/login-button";
 
 export const LoginPage = () => {
   return (
@@ -14,10 +14,7 @@ export const LoginPage = () => {
         <span className="matrix-top">
           <DotMatrix />
         </span>
-        <button id="login-btn">
-          <img src={google} alt="Google Logo" id="google-logo" />
-          Sign up or Sign In with Google
-        </button>
+        <LoginButton />
         <span className="matrix-bottom">
           <DotMatrix />
         </span>
