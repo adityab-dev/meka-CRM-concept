@@ -31,8 +31,13 @@ import { useState } from "react";
 
 import "./Dashboard.css";
 import { Padding } from "@mui/icons-material";
+import { ButtonsStack } from "../../Components/dashboard-components/buttons-stack/buttons-stack";
+import { FilterButton } from "../../Components/dashboard-components/buttons/filter-buttons";
+import { DashboardMain } from "../../Components/dashboard-main/dashboard-main";
+import { DashboardHeader } from "../../Components/dashboard-header/dashboard-header";
+import { DashboardList } from "../../Components/dashboard-list/Dashboard-list";
 
-const boxStyles = {
+export const boxStyles = {
   height: "35rem",
   width: "35rem",
   borderRadius: "15px",
@@ -41,7 +46,7 @@ const boxStyles = {
 };
 
 // TODO: left margin unmodifiable.
-const buttonStyles = {
+export const buttonStyles = {
   backgroundColor: "white",
   boxShadow: "1px 1px 20px rgba(0, 0, 0, 0.1)",
   color: "black",
@@ -52,12 +57,12 @@ const buttonStyles = {
   },
 };
 
-const typoStyles = {
+export const typoStyles = {
   paddingLeft: "0.25rem",
   marginRight: "0.25rem",
 };
 
-const listItemsStyles = {
+export const listItemsStyles = {
   ".MuiTypography-root": {
     fontSize: "1rem",
     fontWeight: "bold",
@@ -65,22 +70,21 @@ const listItemsStyles = {
   },
 };
 
-const paperStyles = {
+export const paperStyles = {
   height: "500px",
   width: "500px",
   borderRadius: "10px",
 };
 
-const stackStyles = {
+export const stackStyles = {
   display: "flex",
   flexDirection: "row",
   borderRadius: "5px",
-  backgroundColor: "#afafaf",
   height: "2.5rem",
   gap: "1rem",
 };
 
-const menuItemBox = {
+export const menuItemBox = {
   width: "100%",
   height: "100%",
   padding: "0",
@@ -91,7 +95,7 @@ const menuItemBox = {
   gap: "1rem",
 };
 
-const menuListButtonStyles = {
+export const menuListButtonStyles = {
   color: "black",
   display: "flex",
   alignItems: "center",
@@ -105,7 +109,7 @@ const menuListButtonStyles = {
   },
 };
 
-const menuItemStyles = {
+export const menuItemStyles = {
   "&:hover": { background: "rgba(255, 235, 218, 0.31)" },
   padding: "0",
 };
@@ -115,103 +119,105 @@ const dummyObjOptions = dummyOptions.map((option, index) => {
   return { id: index + 1, label: option };
 });
 
-export const Dashboard = () => {
-  const [checkedValues, setCheckedValues] = useState<string[]>([]);
-  console.log("checkedValues", checkedValues);
-  
+// Checkbox List Menu
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const checkboxValue = event.target.value;
-    if (checkedValues.indexOf(checkboxValue) === -1) {
-      setCheckedValues((prevState) => {
-        let newState = structuredClone(prevState);
-        newState.push(checkboxValue);
-        return newState;
-      });
-    } else {
-      const index = checkedValues.findIndex((savedValue) => savedValue === checkboxValue);
-      setCheckedValues((prevState) => {
-        prevState.splice(index, 1);
-        return structuredClone(prevState);
-      });
-    }
-  };
+// export const Dashboard = () => {
+//   const [checkedValues, setCheckedValues] = useState<string[]>([]);
+//   console.log("checkedValues", checkedValues);
 
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+//   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     const checkboxValue = event.target.value;
+//     if (checkedValues.indexOf(checkboxValue) === -1) {
+//       setCheckedValues((prevState) => {
+//         let newState = structuredClone(prevState);
+//         newState.push(checkboxValue);
+//         return newState;
+//       });
+//     } else {
+//       const index = checkedValues.findIndex((savedValue) => savedValue === checkboxValue);
+//       setCheckedValues((prevState) => {
+//         prevState.splice(index, 1);
+//         return structuredClone(prevState);
+//       });
+//     }
+//   };
 
-  const anchorElSetter = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+//   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  return (
-    <Box>
-      <Box>
-        <Button onClick={anchorElSetter} variant="contained">
-          Open
-        </Button>
-      </Box>
+//   const anchorElSetter = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
 
-      <Box>
-        <FormControl>
-          <FormGroup>
-            <Menu
-              open={anchorEl !== null ? true : false}
-              anchorEl={anchorEl}
-              onClose={() => setAnchorEl(null)}
-            >
-              <MenuItem>
-                <FormControlLabel
-                  label="(CEO)"
-                  control={
-                    <Checkbox
-                      value="CEO"
-                      checked={checkedValues.includes("CEO")}
-                      onChange={changeHandler}
-                    />
-                  }
-                />
-              </MenuItem>
+//   return (
+//     <Box>
+//       <Box>
+//         <Button onClick={anchorElSetter} variant="contained">
+//           Open
+//         </Button>
+//       </Box>
 
-              <Divider orientation="horizontal" />
+//       <Box>
+//         <FormControl>
+//           <FormGroup>
+//             <Menu
+//               open={anchorEl !== null ? true : false}
+//               anchorEl={anchorEl}
+//               onClose={() => setAnchorEl(null)}
+//             >
+//               <MenuItem>
+//                 <FormControlLabel
+//                   label="(CEO)"
+//                   control={
+//                     <Checkbox
+//                       value="CEO"
+//                       checked={checkedValues.includes("CEO")}
+//                       onChange={changeHandler}
+//                     />
+//                   }
+//                 />
+//               </MenuItem>
 
-              <MenuItem>
-                <FormControlLabel
-                  label="(CFO)"
-                  control={
-                    <Checkbox
-                      value="CFO"
-                      checked={checkedValues.includes("CFO")}
-                      onChange={changeHandler}
-                    />
-                  }
-                />
-              </MenuItem>
+//               <Divider orientation="horizontal" />
 
-              <Divider orientation="horizontal" />
+//               <MenuItem>
+//                 <FormControlLabel
+//                   label="(CFO)"
+//                   control={
+//                     <Checkbox
+//                       value="CFO"
+//                       checked={checkedValues.includes("CFO")}
+//                       onChange={changeHandler}
+//                     />
+//                   }
+//                 />
+//               </MenuItem>
 
-              <MenuItem>
-                <FormControlLabel
-                  label="(CTO)"
-                  control={
-                    <Checkbox
-                      value="CTO"
-                      checked={checkedValues.includes("CTO")}
-                      onChange={changeHandler}
-                    />
-                  }
-                />
-              </MenuItem>
+//               <Divider orientation="horizontal" />
 
-              <Divider orientation="horizontal" />
-            </Menu>
-          </FormGroup>
-        </FormControl>
-      </Box>
-    </Box>
-  );
-};
+//               <MenuItem>
+//                 <FormControlLabel
+//                   label="(CTO)"
+//                   control={
+//                     <Checkbox
+//                       value="CTO"
+//                       checked={checkedValues.includes("CTO")}
+//                       onChange={changeHandler}
+//                     />
+//                   }
+//                 />
+//               </MenuItem>
+
+//               <Divider orientation="horizontal" />
+//             </Menu>
+//           </FormGroup>
+//         </FormControl>
+//       </Box>
+//     </Box>
+//   );
+// };
 
 // Filter Menu
 
-// export const filterMenu = () => {
+// // TODO: onHover styles !== onFocus
+// export const Dashboard = () => {
 //   const [anchEl, setAnchrEl] = useState<null | HTMLElement>(null);
 
 //   let openMenu: boolean;
@@ -400,56 +406,15 @@ export const Dashboard = () => {
 //   );
 // };
 
-// buttons
-// export const Dashboard = () => {
-//   return (
-//     <div className="dasboard-container">
-//       <Stack spacing={50} display="flex" direction="row">
-//         <Stack spacing={2.5} display="flex" direction="row">
-//           <button className="btn-stlyes align-center filter-btns-pad ">
-//             <span className="filter-icon align-center">
-//               <BsFilter />
-//             </span>
-//             Filters <p className="pipe align-center">|</p>
-//             <span className="down-icon align-center">
-//               <AiOutlineDown />
-//             </span>
-//           </button>
+export const Dashboard = () => {
+  return (
+    <Box display="flex">
+      <DashboardList />
 
-//           <button className="btn-stlyes align-center filter-btns-pad">
-//             <span className="align-center calender-icon">
-//               <BsCalendarDate />
-//             </span>
-//             Select Date
-//             <span className="down-icon align-center">
-//               <AiOutlineDown />
-//             </span>
-//           </button>
-//         </Stack>
-
-//         <Stack display="flex" direction="row" spacing={1}>
-//           <button className="btn-stlyes align-center action-btns-pad">
-//             <span className="act-icons-pd-r align-center">
-//               <MdDeleteForever />
-//             </span>
-//             Delete
-//           </button>
-
-//           <button className="btn-stlyes align-center action-btns-pad">
-//             <span className="act-icons-pd-r align-center">
-//               <MdOutlineImportExport />
-//             </span>
-//             Import
-//           </button>
-
-//           <button className="btn-stlyes align-center action-btns-pad">
-//             <span className="act-icons-pd-r align-center">
-//               <CiExport />
-//             </span>
-//             Export
-//           </button>
-//         </Stack>
-//       </Stack>
-//     </div>
-//   );
-// };
+      <Box component="section" flexGrow="1">
+        <DashboardHeader />
+        <DashboardMain />
+      </Box>
+    </Box>
+  );
+};
