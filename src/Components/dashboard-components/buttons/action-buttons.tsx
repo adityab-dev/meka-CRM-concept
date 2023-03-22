@@ -2,6 +2,8 @@ import { Box, Button } from "@mui/material";
 import { buttonStyles } from "./filter-buttons";
 import { CiExport } from "react-icons/ci";
 import { MdDeleteForever, MdOutlineImportExport } from "react-icons/md";
+import { useAppDispatch } from "../../../store/hooks/hook";
+import { initialImportController } from "../../../store/slices/modals-slice";
 
 export const actionButtonStyles = {
   padding: "0 0.5rem",
@@ -24,6 +26,7 @@ export const DeleteButton = () => {
 };
 
 export const ImportButton = () => {
+  const dispatch = useAppDispatch();
   return (
     <Button
       sx={buttonStyles}
@@ -32,6 +35,7 @@ export const ImportButton = () => {
           <MdOutlineImportExport size={15} />
         </Box>
       }
+      onClick={() => dispatch(initialImportController({ showModal: true }))}
     >
       Import
     </Button>

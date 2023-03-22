@@ -12,18 +12,18 @@ import {
 
 import { useState } from "react";
 
-const designations = [
-  "(CEO) - Chief Executive Office",
-  "(CTO) - Chief Technology Officer",
-  "Founder",
-  "Director",
-  "Vice President (VP)",
-  "Owner",
-  "(CIO) - Chief Information Officer",
-  "VP of Technologies",
+const industries = [
+  "Retail",
+  "Consumer goods",
+  "Consumer services",
+  "Appreal & Fashions",
+  "Oil & Energy",
+  "Logistics",
+  "Internet",
+  "Hospital & Healthcare",
 ];
 
-export const FilterCheckList = (props: {
+export const IndustryChecklist = (props: {
   filterCategoryAnchorEl: HTMLElement | null;
   onClose: () => void;
 }) => {
@@ -56,11 +56,11 @@ export const FilterCheckList = (props: {
             open={filterCategoryAnchorEl !== null ? true : false}
             anchorEl={filterCategoryAnchorEl}
             onClose={() => props.onClose()}
-            anchorOrigin={{ vertical: "top", horizontal: 292.5 }}
+            anchorOrigin={{ vertical: "top", horizontal: 260.5 }}
             transformOrigin={{ vertical: "top", horizontal: "center" }}
             sx={{ ".MuiList-root": { padding: "0" } }}
           >
-            {designations.map((designation, index) => {
+            {industries.map((industry, index) => {
               return (
                 <Box key={index}>
                   <MenuItem
@@ -69,15 +69,15 @@ export const FilterCheckList = (props: {
                   >
                     <FormControlLabel
                       sx={{ ".MuiButtonBase-root": { padding: 0 } }}
-                      label={designation}
+                      label={industry}
                       control={
                         <Checkbox
                           sx={{
                             marginRight: "0.5rem",
                             ".MuiTypography-root": { fontSize: "2rem" },
                           }}
-                          value={designation}
-                          checked={checkedValues.includes("CEO")}
+                          value={industry}
+                          // checked={checkedValues.includes("CEO")}
                           onChange={changeHandler}
                         />
                       }

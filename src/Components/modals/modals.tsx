@@ -8,71 +8,51 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
-
 import { boxStyles } from "../dashboard-components/buttons-stack/buttons-stack";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hook";
+import { modalVisibilityController } from "../../store/slices/modals-slice";
+import { clearAllFilters } from "../../store/slices/filters-slice";
 
-import successfullyDeleted from "../../assets/successful-deletion.png";
-
-export const Dashboard = () => {
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [openDeletionDialog, setOpenDeletionDialog] = useState<boolean>(false);
+export const Modal = () => {
+  const { showModal } = useAppSelector((state) => state.modals);
+  const dispatch = useAppDispatch();
 
   return (
-    <Box component="section" sx={boxStyles}>
-      <Box>
-        <Button variant="contained" onClick={() => setOpenDialog((prevState) => !prevState)}>
-          Open Modal
-        </Button>
-
-        <Dialog
-          open={openDialog}
-          onClose={() => setOpenDialog(false)}
-          sx={{ borderRadius: "2rem" }}
-        >
-          <DialogTitle margin="0 auto">
-            <AiFillDelete size={50} />
-          </DialogTitle>
-          <DialogTitle margin="0 auto">Delete Contacts</DialogTitle>
-          <DialogContent>
-            <DialogContentText>Sure you want delete this Contacts ?</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              sx={{ backgroundColor: "orange", "&:hover": { backgroundColor: "orange" } }}
-              variant="contained"
-              onClick={() => setOpenDialog(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              sx={{
-                color: "black",
-                fontSize: "1rem",
-                fontWeight: "bold",
-                "&:hover": { backgroundColor: "wheat" },
-              }}
-              onClick={() => {
-                setOpenDeletionDialog(true);
-                setOpenDialog(false);
-              }}
-            >
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        <Dialog open={openDeletionDialog} onClose={() => setOpenDeletionDialog(false)}>
-          <DialogTitle sx={{ margin: "5rem 8rem 0 8rem", padding: "0" }}>
-            {/* <FaCheck size={25}/> */}
-            <img src={successfullyDeleted} alt="Successfully Deleted" />
-          </DialogTitle>
-          <DialogTitle sx={{ margin: "0 auto 2rem auto", fontSize: "1.25rem" }}>
-            Deleted Contacts
-          </DialogTitle>
-        </Dialog>
-      </Box>
+    <Box component="section">
+      <Dialog
+        open={showModal}
+        onClose={() => dispatch(modalVisibilityController({ showModal: false }))}
+        sx={{ borderRadius: "2rem" }}
+      >
+        <DialogTitle margin="0 auto">Clear Filters</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Sure you want to clear all applied filters ?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{ backgroundColor: "orange", "&:hover": { backgroundColor: "orange" } }}
+            variant="contained"
+            onClick={() => dispatch(modalVisibilityController({ showModal: false }))}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{
+              color: "black",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              "&:hover": { backgroundColor: "wheat" },
+            }}
+            onClick={() => {
+              dispatch(clearAllFilters());
+              dispatch(modalVisibilityController({ showModal: false }));
+            }}
+          >
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

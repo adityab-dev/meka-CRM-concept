@@ -1,15 +1,20 @@
+
 import { Box, Stack } from "@mui/material";
-import { useState } from "react";
+
+import { useAppSelector } from "../../../store/hooks/hook";
+import { ImportModal } from "../../modals/import-modal";
+import { Modal } from "../../modals/modals";
+import { SuccessImportModal } from "../../modals/success-imort-modal";
 
 import { DeleteButton, ExportButton, ImportButton } from "../buttons/action-buttons";
+import { ClearDateButton, ClearFiltersButton } from "../buttons/clear-filters-btn";
 import { FilterButton, SelectDateButton } from "../buttons/filter-buttons";
-import { FilterCheckList } from "../filter-check-list/filter-check-list";
+import { CountriesChecklist } from "../country-check-list/country-check-list";
 import { FiltersCategories } from "../filters-categories/filters-categories";
 
 export const boxStyles = {
   marginTop: "1.5rem",
-  paddingTop: "1.15rem",
-  height: "40rem",
+  height: "5rem",
   width: "95%",
   borderRadius: "15px",
   backgroundColor: "#FBFBFB",
@@ -19,7 +24,7 @@ export const stackStyles = {
   display: "flex",
   flexDirection: "row",
   borderRadius: "5px",
-  height: "2.5rem",
+  height: "5rem",
   gap: "1rem",
 };
 
@@ -30,30 +35,44 @@ export const menuItemStyles = {
 
 // TODO: onHover styles !== onFocus
 export const ButtonsStack = () => {
-  const [anchEl, setAnchrEl] = useState<null | HTMLElement>(null);
-  const FilterCategoriesCloseHandler = () => setAnchrEl(null);
-
-  const clickHandler = (event: React.MouseEvent<HTMLElement>) => setAnchrEl(event.currentTarget);
-
-  const [filterCategoryAnchorEl, setFilterCategoryAnchorEl] = useState<HTMLElement | null>(null);
-
-  const filterCategoryClickHandler = (event: React.MouseEvent<HTMLElement>) =>
-    setFilterCategoryAnchorEl(event.currentTarget);
-
-  const checklistCloseHandler = () => setFilterCategoryAnchorEl(null);
+  const { showInitialImport, showModal, showSuccessImport } = useAppSelector(
+    (state) => state.modals
+  );
 
   return (
     <Box sx={boxStyles}>
       <Stack
         sx={stackStyles}
         display="flex"
-        flexDirection="row"
         justifyContent="space-between"
+        alignItems="center"
         padding="0 0.75rem"
       >
         <Stack display="flex" flexDirection="row" gap="1.5rem">
-          <SelectDateButton />
-          <FilterButton onFilterButtonClick={clickHandler} />
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            gap="0.5rem"
+          >
+            <ClearDateButton />
+            <SelectDateButton />
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            gap="0.5rem"
+          >
+            <ClearFiltersButton />
+            <FilterButton />
+          </Box>
+
+          <FiltersCategories />
+          <CountriesChecklist />
         </Stack>
 
         <Stack display="flex" flexDirection="row" gap="0.5rem">
@@ -63,16 +82,9 @@ export const ButtonsStack = () => {
         </Stack>
       </Stack>
 
-      <FiltersCategories
-        onFiltersClose={FilterCategoriesCloseHandler}
-        anchorElement={anchEl}
-        filterCategoryClickHandler={filterCategoryClickHandler}
-      />
-
-      <FilterCheckList
-        filterCategoryAnchorEl={filterCategoryAnchorEl}
-        onClose={checklistCloseHandler}
-      />
+      {showInitialImport ? <ImportModal /> : null}
+      {showSuccessImport ? <SuccessImportModal /> : null}
+      {showModal ? <Modal /> : null}
     </Box>
   );
 };

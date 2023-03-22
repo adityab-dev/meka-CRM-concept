@@ -10,57 +10,44 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useContext } from "react";
+import { popupIds } from "../../../Constants/constants";
+import { filterContext } from "../../../Context/filter-context/filter-context";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks/hook";
+import {
+  applyButtonClickHandler,
+  checkboxInteractionHandler,
+} from "../../../store/slices/filters-slice";
 
-const designations = [
-  "(CEO) - Chief Executive Office",
-  "(CTO) - Chief Technology Officer",
-  "Founder",
-  "Director",
-  "Vice President (VP)",
-  "Owner",
-  "(CIO) - Chief Information Officer",
-  "VP of Technologies",
-];
+export const CountriesChecklist = () => {
+  // TODO: suggestion => useRef
+  // const { openFilterChecklist, filterChecklistAnchor, filterChecklistController } =
+  //   useContext(filterContext);
 
-export const FilterCheckList = (props: {
-  filterCategoryAnchorEl: HTMLElement | null;
-  onClose: () => void;
-}) => {
-  const [checkedValues, setCheckedValues] = useState<string[]>([]);
+  const {
+    popupsController,
+    popupState: { filterChecklistAnchor },
+  } = useContext(filterContext);
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const checkboxValue = event.target.value;
-    if (checkedValues.indexOf(checkboxValue) === -1) {
-      setCheckedValues((prevState) => {
-        let newState = structuredClone(prevState);
-        newState.push(checkboxValue);
-        return newState;
-      });
-    } else {
-      const index = checkedValues.findIndex((savedValue) => savedValue === checkboxValue);
-      setCheckedValues((prevState) => {
-        prevState.splice(index, 1);
-        return structuredClone(prevState);
-      });
-    }
-  };
+  const { checklist, selectedFilters } = useAppSelector((state) => state.filters);
 
-  const { filterCategoryAnchorEl } = props;
+  const dispatch = useAppDispatch();
 
   return (
     <Box>
       <FormControl>
         <FormGroup>
           <Menu
-            open={filterCategoryAnchorEl !== null ? true : false}
-            anchorEl={filterCategoryAnchorEl}
-            onClose={() => props.onClose()}
-            anchorOrigin={{ vertical: "top", horizontal: 292.5 }}
-            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            elevation={7}
+            open={filterChecklistAnchor ? true : false}
+            anchorEl={filterChecklistAnchor}
+            onClose={() =>
+              popupsController({ element: { setNull: true, id: popupIds.filterChecklistAnchor } })
+            }
+            anchorOrigin={{ vertical: "top", horizontal: 152.5 }}
             sx={{ ".MuiList-root": { padding: "0" } }}
           >
-            {designations.map((designation, index) => {
+            {checklist.map((item, index) => {
               return (
                 <Box key={index}>
                   <MenuItem
@@ -69,16 +56,23 @@ export const FilterCheckList = (props: {
                   >
                     <FormControlLabel
                       sx={{ ".MuiButtonBase-root": { padding: 0 } }}
-                      label={designation}
+                      label={item}
                       control={
                         <Checkbox
                           sx={{
                             marginRight: "0.5rem",
                             ".MuiTypography-root": { fontSize: "2rem" },
                           }}
-                          value={designation}
-                          checked={checkedValues.includes("CEO")}
-                          onChange={changeHandler}
+                          value={item}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                            dispatch(
+                              checkboxInteractionHandler({
+                                value: event.target.value,
+                                isChecked: event.target.checked,
+                              })
+                            )
+                          }
+                          checked={selectedFilters.includes(item)}
                         />
                       }
                     />
@@ -126,6 +120,7 @@ export const FilterCheckList = (props: {
                     backgroundColor: "#FE8627",
                   },
                 }}
+                onClick={() => dispatch(applyButtonClickHandler())}
               >
                 Apply
               </Button>

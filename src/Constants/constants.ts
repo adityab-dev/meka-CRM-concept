@@ -1,0 +1,33 @@
+import {
+  InitialFilterContextValues,
+  InitialPopupState,
+  PopupControllerArgs,
+} from "../Types/context-types";
+
+export const initialPopupsState: InitialPopupState = {
+  filterCategoriesAnchor: null,
+  filterChecklistAnchor: null,
+  selectDateAnchor: null,
+  customDateAnchor: null,
+};
+
+export const initialContextValue: InitialFilterContextValues = {
+  popupsController: (popupControllerArgs: PopupControllerArgs) => {},
+  popupState: initialPopupsState,
+  closeAllPopups: () => {},
+};
+
+export const enum listNames {
+  country = "Country",
+  designations = "Designation",
+  industry = "Industry",
+  subscribers = "Subscribers",
+  unsubscribers = "Un-suscribers",
+}
+
+export const enum popupIds {
+  filterCategoriesAnchor = "filterCategoriesAnchor",
+  filterChecklistAnchor = "filterChecklistAnchor",
+  selectDateAnchor = "selectDateAnchor",
+  customDateAnchor = "customDateAnchor",
+}

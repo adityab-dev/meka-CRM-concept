@@ -1,28 +1,51 @@
 import { Button, Menu, MenuItem } from "@mui/material";
+import { useContext } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { filterContext } from "../../../Context/filter-context/filter-context";
 import { menuListButtonStyles } from "../../../Pages/Dashboard/Dashboard";
+import { menuItems } from "../../../Constants/filter-content";
 import { menuItemStyles } from "../buttons-stack/buttons-stack";
+import { useAppDispatch } from "../../../store/hooks/hook";
+import { categoryClickHandler } from "../../../store/slices/filters-slice";
+import { popupIds } from "../../../Constants/constants";
 
-export const menuItems = ["Designation", "Industr", "Country", "Subscribers", "Un-suscribers"];
+export const FiltersCategories = () => {
+  // const {
+  //   filterCategoryController,
+  //   filterCategoryAnchor,
+  //   filterChecklistController,
+  //   openFilterCategories,
+  // } = useContext(filterContext);
 
-export const FiltersCategories = (props: {
-  onFiltersClose: () => void;
-  anchorElement: HTMLElement | null;
-  filterCategoryClickHandler: (event: React.MouseEvent<HTMLElement>) => void;
-}) => {
-  const { onFiltersClose, anchorElement, filterCategoryClickHandler } = props;
+  const {
+    popupsController,
+    popupState: { filterCategoriesAnchor },
+  } = useContext(filterContext);
 
-  let openMenu: boolean;
-
-  if (anchorElement === null) openMenu = false;
-  else openMenu = true;
+  const dispatch = useAppDispatch();
 
   return (
-    <Menu anchorEl={anchorElement} open={openMenu} onClose={onFiltersClose}>
+    <Menu
+      elevation={7}
+      anchorEl={filterCategoriesAnchor}
+      open={filterCategoriesAnchor ? true : false}
+      onClose={() =>
+        popupsController({ element: { setNull: true, id: popupIds.filterCategoriesAnchor } })
+      }
+    >
       {menuItems.map((item, index) => {
         return (
           <MenuItem sx={menuItemStyles} key={index}>
-            <Button sx={menuListButtonStyles} onClick={filterCategoryClickHandler}>
+            <Button
+              sx={menuListButtonStyles}
+              onClick={(event) => {
+                popupsController({
+                  element: { setNull: false, id: popupIds.filterChecklistAnchor },
+                  event,
+                });
+                dispatch(categoryClickHandler(item));
+              }}
+            >
               {item} <AiOutlineArrowRight />
             </Button>
           </MenuItem>
