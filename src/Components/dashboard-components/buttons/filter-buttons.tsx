@@ -25,7 +25,6 @@ export const buttonStyles = {
 
 // TODO: some styles are common for all buttons in buttons-stack
 export const FilterButton = () => {
-  // const { filterCategoryController } = useContext(filterContext);
   const { popupsController } = useContext(filterContext);
 
   return (
@@ -34,12 +33,12 @@ export const FilterButton = () => {
         sx={buttonStyles}
         startIcon={<BsFilter size={17.5} />}
         endIcon={<AiOutlineDown size={11} />}
-        onClick={(event) => {
+        onClick={(event) =>
           popupsController({
             element: { setNull: false, id: popupIds.filterCategoriesAnchor },
             event,
-          });
-        }}
+          })
+        }
       >
         Filters |
       </Button>
@@ -48,11 +47,15 @@ export const FilterButton = () => {
 };
 
 export const SelectDateButton = () => {
+  const { popupsController } = useContext(filterContext);
   return (
     <Button
       sx={buttonStyles}
       startIcon={<BsCalendarDate size={15} />}
       endIcon={<AiOutlineDown size={11} />}
+      onClick={(event) =>
+        popupsController({ element: { setNull: false, id: popupIds.selectDateAnchor }, event })
+      }
     >
       Select Date
     </Button>

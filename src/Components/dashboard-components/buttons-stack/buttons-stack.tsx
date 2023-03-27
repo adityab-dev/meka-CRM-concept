@@ -1,7 +1,7 @@
-
 import { Box, Stack } from "@mui/material";
 
 import { useAppSelector } from "../../../store/hooks/hook";
+import { DatesClearModal } from "../../modals/clear-dates-modal";
 import { ImportModal } from "../../modals/import-modal";
 import { Modal } from "../../modals/modals";
 import { SuccessImportModal } from "../../modals/success-imort-modal";
@@ -10,7 +10,9 @@ import { DeleteButton, ExportButton, ImportButton } from "../buttons/action-butt
 import { ClearDateButton, ClearFiltersButton } from "../buttons/clear-filters-btn";
 import { FilterButton, SelectDateButton } from "../buttons/filter-buttons";
 import { CountriesChecklist } from "../country-check-list/country-check-list";
+import { CustomDateRange } from "../custom-date-range/custom-date-range";
 import { FiltersCategories } from "../filters-categories/filters-categories";
+import { DateMenu } from "../select-date/select-date";
 
 export const boxStyles = {
   marginTop: "1.5rem",
@@ -35,7 +37,7 @@ export const menuItemStyles = {
 
 // TODO: onHover styles !== onFocus
 export const ButtonsStack = () => {
-  const { showInitialImport, showModal, showSuccessImport } = useAppSelector(
+  const { showInitialImport, showModal, showSuccessImport, showDatesClear } = useAppSelector(
     (state) => state.modals
   );
 
@@ -49,24 +51,14 @@ export const ButtonsStack = () => {
         padding="0 0.75rem"
       >
         <Stack display="flex" flexDirection="row" gap="1.5rem">
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="0.5rem"
-          >
+          <Box display="flex" flexDirection="column" alignItems="center" gap="0.5rem">
             <ClearDateButton />
             <SelectDateButton />
+            <DateMenu />
+            <CustomDateRange />
           </Box>
 
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="0.5rem"
-          >
+          <Box display="flex" flexDirection="column" alignItems="center" gap="0.5rem">
             <ClearFiltersButton />
             <FilterButton />
           </Box>
@@ -85,6 +77,7 @@ export const ButtonsStack = () => {
       {showInitialImport ? <ImportModal /> : null}
       {showSuccessImport ? <SuccessImportModal /> : null}
       {showModal ? <Modal /> : null}
+      {showDatesClear ? <DatesClearModal /> : null}
     </Box>
   );
 };

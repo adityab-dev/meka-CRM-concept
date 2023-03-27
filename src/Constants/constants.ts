@@ -31,3 +31,15 @@ export const enum popupIds {
   selectDateAnchor = "selectDateAnchor",
   customDateAnchor = "customDateAnchor",
 }
+
+export const enum dateInputIds {
+  startDate = "startDate",
+  endDate = "endDate",
+}
+
+// export const enum dateInputIds {
+//   selected_startDate = "selected_startDate",
+//   selected_endDate = "selected_endDate",
+//   saved_startDate = "saved_startDate",
+//   saved_endDate = "saved_endDate",
+// }

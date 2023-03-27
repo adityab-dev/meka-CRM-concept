@@ -32,6 +32,7 @@ export const FiltersCategories = () => {
       onClose={() =>
         popupsController({ element: { setNull: true, id: popupIds.filterCategoriesAnchor } })
       }
+      transformOrigin={{ vertical: -10, horizontal: 0 }}
     >
       {menuItems.map((item, index) => {
         return (

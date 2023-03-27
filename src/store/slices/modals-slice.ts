@@ -4,6 +4,7 @@ const initialModalState = {
   showModal: false,
   showInitialImport: false,
   showSuccessImport: false,
+  showDatesClear: false,
 };
 
 const modalsSlice = createSlice({
@@ -26,9 +27,17 @@ const modalsSlice = createSlice({
 
       state.showSuccessImport = showModal;
     },
+
+    datesClearController(state, action: PayloadAction<{ showModal: boolean }>) {
+      state.showDatesClear = action.payload.showModal;
+    },
   },
 });
 
-export const { modalVisibilityController, initialImportController, successImportController } =
-  modalsSlice.actions;
+export const {
+  modalVisibilityController,
+  initialImportController,
+  successImportController,
+  datesClearController,
+} = modalsSlice.actions;
 export default modalsSlice.reducer;

@@ -1,6 +1,10 @@
 import { Button } from "@mui/material";
-import { useAppDispatch } from "../../../store/hooks/hook";
-import { modalVisibilityController } from "../../../store/slices/modals-slice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks/hook";
+import { clearSavedDates } from "../../../store/slices/dates-slice";
+import {
+  datesClearController,
+  modalVisibilityController,
+} from "../../../store/slices/modals-slice";
 
 export const ClearFiltersButton = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +32,7 @@ export const ClearFiltersButton = () => {
 };
 
 export const ClearDateButton = () => {
+  const dispatch = useAppDispatch();
   return (
     // TODO: show modal for conformation.
     <Button
@@ -43,6 +48,7 @@ export const ClearDateButton = () => {
         boxShadow: " 1px 1px 20px rgba(0, 0, 0, 0.1)",
         borderRadius: "6px",
       }}
+      onClick={() => dispatch(datesClearController({ showModal: true }))}
     >
       Clear Date
     </Button>

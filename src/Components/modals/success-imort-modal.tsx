@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 
 import successfullImportIcon from "../../assets/successful-deletion.png";
-import { boxStyles } from "../dashboard-components/buttons-stack/buttons-stack";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hook";
-import { initialImportController, successImportController } from "../../store/slices/modals-slice";
+import { successImportController } from "../../store/slices/modals-slice";
 
 export const SuccessImportModal = () => {
   const { showSuccessImport } = useAppSelector((state) => state.modals);
