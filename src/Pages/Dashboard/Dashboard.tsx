@@ -6,6 +6,7 @@ import { DashboardMain } from "../../Components/dashboard-main/dashboard-main";
 import { DashboardHeader } from "../../Components/dashboard-header/dashboard-header";
 import { DashboardList } from "../../Components/dashboard-list/Dashboard-list";
 import { FilterContextProvider } from "../../Context/filter-context/filter-context-provider";
+import Table from "../../Components/Table/Table";
 
 export const boxStyles = {
   height: "35rem",
@@ -75,6 +76,7 @@ export const Dashboard = () => {
         <FilterContextProvider>
           <DashboardMain />
         </FilterContextProvider>
+        <Table />
       </Box>
     </Box>
   );

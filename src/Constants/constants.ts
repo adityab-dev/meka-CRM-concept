@@ -43,3 +43,24 @@ export const enum dateInputIds {
 //   saved_startDate = "saved_startDate",
 //   saved_endDate = "saved_endDate",
 // }
+
+export const disabledFeatures = {
+  enableGlobalFilter: false,
+  enableColumnFilters: false,
+  enableHiding: false,
+  enableDensityToggle: false,
+  enableFullScreenToggle: false,
+  muiTablePaginationProps: {
+    rowsPerPageOptions: [],
+  },
+};
+
+export const enabledFeatures = {
+  enableClickToCopy: true,
+  enableRowSelection: true,
+};
+
+export const paginationProps = {
+  enablePagination: true,
+  // positionPagination: "bottom",
+};
