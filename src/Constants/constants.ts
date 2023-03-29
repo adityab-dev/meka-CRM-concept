@@ -53,14 +53,15 @@ export const disabledFeatures = {
   muiTablePaginationProps: {
     rowsPerPageOptions: [],
   },
+  enableTopToolbar: false,
 };
 
 export const enabledFeatures = {
   enableClickToCopy: true,
   enableRowSelection: true,
+  enableRowActions: true,
 };
 
 export const paginationProps = {
   enablePagination: true,
-  // positionPagination: "bottom",
 };
